@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Example from "./components/example";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="container p-16 flex">
+      <div>
+        <Example />
+      </div>
+      <div className="font-mono">
+        <h1 className="text-lg font-bold">Example D3.js plot and example styling!</h1>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Plot is taken from{" "}
+          <a
+            className="font-semibold text-blue-600 hover:text-red-500"
+            href="https://blog.logrocket.com/using-d3-js-v6-with-react/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            here
+          </a>
         </p>
+        Link to{" "}
         <a
-          className="App-link"
-          href="https://reactjs.org"
+          className="font-semibold text-blue-600 hover:text-red-500"
+          href="https://https://tailwindcss.com/docs/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Tailwind documentation
         </a>
-      </header>
+      </div>
     </div>
   );
 }
