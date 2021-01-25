@@ -31,7 +31,12 @@ export function getData() {
             relevant_course_experience: rawData.relevant_course_experience,
             thesis_status: rawData.thesis_status,
             timestamp: rawData.timestamp,
-            username: rawData.username
+            username: rawData.username,
+            MathWiz: (parseInt(rawData.personal_math_skills)+parseInt(rawData.personal_stat_skills))/2,
+            Programmer: (parseInt(rawData.personal_progr_skills)+parseInt(rawData.personal_git_skills)+parseInt(rawData.personal_comp_skills)+parseInt(rawData.personal_graphics_skills))/4,
+            Artist: (parseInt(rawData.personal_art_skills)+parseInt(rawData.personal_vis_skills))/2,
+            UX: (parseInt(rawData.personal_ux_skills)+parseInt(rawData.personal_vis_skills))/2,
+            Communicator: (parseInt(rawData.personal_comms_skills)+parseInt(rawData.personal_collab_skills))/2,
         }
     });
 }
