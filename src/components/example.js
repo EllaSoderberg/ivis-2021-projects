@@ -92,6 +92,7 @@ export default function Example() {
           .style("fill", "red")
           .on("mouseover", highlight)
           .on("mouseleave", doNotHighlight);
+          return "";
       });
       /*const circle = d3
       .selectAll(".dot")
