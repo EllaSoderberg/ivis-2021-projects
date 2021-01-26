@@ -24,7 +24,7 @@ export default function Example() {
     const yLabels = d3
       .scalePoint()
       .domain(["MathWiz", "Programmer", "Artist", "UX", "Communicator"])
-      .range([0, height-80]);
+      .range([margin.top+margin.bottom, height-margin.bottom]);
 
     svg.append("g").call(axisLeft(yLabels));
 
@@ -33,44 +33,6 @@ export default function Example() {
       .append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x));
-
-    const circle = d3
-      .selectAll(".dot")
-      .append("svg")
-      .attr("width", 10)
-      .attr("height", 10);
-    circle
-      .append("circle")
-      .attr("cx", 5)
-      .attr("cy", 5)
-      .attr("r", 10)
-      .attr("fill", "lightgray");
-    circle
-      .append("circle")
-      .attr("cx", 15)
-      .attr("cy", 20)
-      .attr("r", 3)
-      .attr("fill", "black");
-    circle
-      .append("circle")
-      .attr("cx", 35)
-      .attr("cy", 20)
-      .attr("r", 3)
-      .attr("fill", "black");
-    circle
-      .append("ellipse")
-      .attr("cx", 25)
-      .attr("cy", 26)
-      .attr("rx", 6)
-      .attr("ry", 3)
-      .attr("fill", "black");
-    circle
-      .append("ellipse")
-      .attr("cx", 25)
-      .attr("cy", 24)
-      .attr("rx", 6)
-      .attr("ry", 3)
-      .attr("fill", "yellow");
 
     getData().then((data) => {
       var highlight = function (event) {
@@ -106,11 +68,9 @@ export default function Example() {
       ];
       categories.map((cat) => {
         let numberDict = {};
-        svg
-          .append("g")
-          .selectAll("dot")
-          .data(data)
-          .enter()
+        let dots = svg.append("g").selectAll("dot").data(data).enter();
+
+        dots
           .append("circle")
           .attr("class", function (d) {
             console.log(d.username, d[cat]);
@@ -119,11 +79,11 @@ export default function Example() {
           .attr("cx", (d) => x(d[cat]))
           .attr("cy", (d) => {
             let info = d[cat];
-            let margin = 1;
+            let margin = -1;
             if (!numberDict[info]) {
-              numberDict[info] = 1;
+              numberDict[info] = -1;
             } else if (numberDict[info]) {
-              numberDict[info] += 5;
+              numberDict[info] -= 5;
               margin = numberDict[info];
             }
             return yLabels(cat) + margin;
@@ -133,6 +93,43 @@ export default function Example() {
           .on("mouseover", highlight)
           .on("mouseleave", doNotHighlight);
       });
+      /*const circle = d3
+      .selectAll(".dot")
+      .append("svg")
+      .attr("width", 10)
+      .attr("height", 10);
+    circle
+      .append("circle")
+      .attr("cx", 5)
+      .attr("cy", 5)
+      .attr("r", 10)
+      .attr("fill", "lightgray");
+    circle
+      .append("circle")
+      .attr("cx", 15)
+      .attr("cy", 20)
+      .attr("r", 3)
+      .attr("fill", "black");
+    circle
+      .append("circle")
+      .attr("cx", 35)
+      .attr("cy", 20)
+      .attr("r", 3)
+      .attr("fill", "black");
+    circle
+      .append("ellipse")
+      .attr("cx", 25)
+      .attr("cy", 26)
+      .attr("rx", 6)
+      .attr("ry", 3)
+      .attr("fill", "black");
+    circle
+      .append("ellipse")
+      .attr("cx", 25)
+      .attr("cy", 24)
+      .attr("rx", 6)
+      .attr("ry", 3)
+      .attr("fill", "yellow");*/
     });
   }, []);
 
