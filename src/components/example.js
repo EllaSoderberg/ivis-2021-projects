@@ -23,8 +23,8 @@ export default function Example() {
 
     const yLabels = d3
       .scalePoint()
-      .domain(["MathWiz", "Programmer", "Artist", "UX-pro", "Communicator"])
-      .range([margin.top, height]);
+      .domain(["MathWiz", "Programmer", "Artist", "UX", "Communicator"])
+      .range([0, height-80]);
 
     svg.append("g").call(axisLeft(yLabels));
 
@@ -35,16 +35,16 @@ export default function Example() {
       .call(d3.axisBottom(x));
 
     const circle = d3
-      .select("#smiley")
+      .selectAll(".dot")
       .append("svg")
-      .attr("width", 50)
-      .attr("height", 50);
+      .attr("width", 10)
+      .attr("height", 10);
     circle
       .append("circle")
-      .attr("cx", 25)
-      .attr("cy", 25)
-      .attr("r", 25)
-      .attr("fill", "yellow");
+      .attr("cx", 5)
+      .attr("cy", 5)
+      .attr("r", 10)
+      .attr("fill", "lightgray");
     circle
       .append("circle")
       .attr("cx", 15)
@@ -97,87 +97,47 @@ export default function Example() {
           .style("fill", "lightgrey")
           .attr("r", 5);
       };
-      svg
-        .append("g")
-        .selectAll("dot")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("class", function (d) {
-          return "dot " + d.username;
-        })
-        .attr("cx", (d) => x(d.MathWiz))
-        .attr("cy", yLabels("MathWiz"))
-        .attr("r", 7)
-        .style("fill", "red")
-        .on("mouseover", highlight)
-        .on("mouseleave", doNotHighlight);
-      svg
-        .append("g")
-        .selectAll("dot")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("class", function (d) {
-          return "dot " + d.username;
-        })
-        .attr("cx", (d) => x(d.Programmer))
-        .attr("cy", yLabels("Programmer"))
-        .attr("r", 7)
-        .style("fill", "red")
-        .on("mouseover", highlight)
-        .on("mouseleave", doNotHighlight);
-      svg
-        .append("g")
-        .selectAll("dot")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("class", function (d) {
-          return "dot " + d.username;
-        })
-        .attr("cx", (d) => x(d.Artist))
-        .attr("cy", yLabels("Artist"))
-        .attr("r", 7)
-        .style("fill", "red")
-        .on("mouseover", highlight)
-        .on("mouseleave", doNotHighlight);
-      svg
-        .append("g")
-        .selectAll("dot")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("class", function (d) {
-          return "dot " + d.username;
-        })
-        .attr("cx", (d) => x(d.UX))
-        .attr("cy", yLabels("UX-pro"))
-        .attr("r", 7)
-        .style("fill", "red")
-        .on("mouseover", highlight)
-        .on("mouseleave", doNotHighlight);
-      svg
-        .append("g")
-        .selectAll("dot")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("class", function (d) {
-          return "dot " + d.username;
-        })
-        .attr("cx", (d) => x(d.Communicator))
-        .attr("cy", yLabels("Communicator"))
-        .attr("r", 7)
-        .style("fill", "red")
-        .on("mouseover", highlight)
-        .on("mouseleave", doNotHighlight);
+      let categories = [
+        "MathWiz",
+        "Programmer",
+        "Artist",
+        "UX",
+        "Communicator",
+      ];
+      categories.map((cat) => {
+        let numberDict = {};
+        svg
+          .append("g")
+          .selectAll("dot")
+          .data(data)
+          .enter()
+          .append("circle")
+          .attr("class", function (d) {
+            console.log(d.username, d[cat]);
+            return "dot " + d.username;
+          })
+          .attr("cx", (d) => x(d[cat]))
+          .attr("cy", (d) => {
+            let info = d[cat];
+            let margin = 1;
+            if (!numberDict[info]) {
+              numberDict[info] = 1;
+            } else if (numberDict[info]) {
+              numberDict[info] += 5;
+              margin = numberDict[info];
+            }
+            return yLabels(cat) + margin;
+          })
+          .attr("r", 7)
+          .style("fill", "red")
+          .on("mouseover", highlight)
+          .on("mouseleave", doNotHighlight);
+      });
     });
   }, []);
 
   return (
     <div className="App">
-      <svg id="smiley"></svg>
       <svg id="area" height={500} width={900}></svg>
     </div>
   );
