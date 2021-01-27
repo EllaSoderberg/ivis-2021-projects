@@ -66,72 +66,6 @@ export default class ArchetypesGraph extends Component {
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x));
 
-<<<<<<< HEAD
-    getData().then((data) => {
-      var highlight = function (event) {
-        let selected_user = event.target.classList[1];
-
-        props.onUserSelected(selected_user);
-
-        d3.selectAll(".dot")
-          .transition()
-          .duration(200)
-          .style("fill", "lightgrey")
-          .attr("r", 3);
-
-        d3.selectAll("." + selected_user)
-          .transition()
-          .duration(200)
-          .style("fill", "red")
-          .attr("r", 7);
-      };
-
-      // Highlight the specie that is hovered
-      var doNotHighlight = function () {
-        d3.selectAll(".dot")
-          .transition()
-          .duration(200)
-          .style("fill", "lightgrey")
-          .attr("r", 5);
-      };
-      let categories = [
-        "MathWiz",
-        "Programmer",
-        "Artist",
-        "UX",
-        "Communicator",
-      ];
-      categories.map((cat) => {
-        let numberDict = {};
-        let dots = svg.append("g").selectAll("dot").data(data).enter();
-
-        dots
-          .append("circle")
-          .attr("class", function (d) {
-            return "dot " + d.username;
-          })
-          .attr("cx", (d) => x(d[cat]))
-          .attr("cy", (d) => {
-            let info = d[cat];
-            let margin = -1;
-            if (!numberDict[info]) {
-              numberDict[info] = -1;
-            } else if (numberDict[info]) {
-              numberDict[info] -= 5;
-              margin = numberDict[info];
-            }
-            return yLabels(cat) + margin;
-          })
-          .attr("r", 7)
-          .style("fill", "red")
-          .on("mouseover", highlight)
-          .on("mouseleave", doNotHighlight);
-        return "";
-      });
-    });
-  //eslint-disable-next-line
-  }, []);
-=======
     let categories = [
       "MathWiz",
       "Programmer",
@@ -164,7 +98,6 @@ export default class ArchetypesGraph extends Component {
       // .on("mouseleave", this.handleMouseOver(""))
       return "";
     });
->>>>>>> Refactor to class
 
     this.highlightUser()
   }
