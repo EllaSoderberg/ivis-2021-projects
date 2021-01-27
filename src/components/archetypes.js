@@ -1,14 +1,46 @@
-import React, { useEffect } from "react";
+import React, { Component } from "react";
 import * as d3 from "d3";
-import { getData } from "./scripts/data";
 import { axisLeft } from "d3";
 
 // Example taken from https://blog.logrocket.com/using-d3-js-v6-with-react/
 
 //https://www.d3-graph-gallery.com/graph/scatter_grouped_highlight.html
 
-export default function Archetypes(props) {
-  useEffect(() => {
+export default class ArchetypesGraph extends Component {
+  constructor(props) {
+    super(props);
+    this.creatGraph = this.creatGraph.bind(this)
+  }
+
+  componentDidMount() {
+    this.creatGraph();
+  }
+  componentDidUpdate() {
+    this.creatGraph();
+  }
+
+  highlightUser() {
+    if (this.props.highlightedUser) {
+      d3.selectAll("." + this.props.highlightedUser)
+        .transition()
+        .duration(200)
+        .style("fill", "red")
+        .attr("z", 10)
+        .attr("r", 7);
+    }
+  }
+
+  handleMouseOver(user) {
+    console.log("\nhandleMouseOver")
+    console.log(user);
+    console.log(this.props.highlightedUser)
+    if (this.props.highlightedUser !== user) {
+      console.log("nUserSelected")
+      this.props.onUserSelected(user)
+    }
+  }
+
+  creatGraph() {
     const margin = { top: 10, right: 40, bottom: 30, left: 80 },
       width = 800 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
@@ -34,6 +66,7 @@ export default function Archetypes(props) {
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x));
 
+<<<<<<< HEAD
     getData().then((data) => {
       var highlight = function (event) {
         let selected_user = event.target.classList[1];
@@ -98,11 +131,50 @@ export default function Archetypes(props) {
     });
   //eslint-disable-next-line
   }, []);
+=======
+    let categories = [
+      "MathWiz",
+      "Programmer",
+      "Artist",
+      "UX",
+      "Communicator",
+    ];
+    categories.map((cat) => {
+      let numberDict = {};
+      let dots = svg.append("g").selectAll("dot").data(this.props.users).enter();
 
-  return (
-    <div className="App">
-      <h1>Archetypes</h1>
-      <svg id="area" height={500} width={900}></svg>
-    </div>
-  );
+      dots
+        .append("circle")
+        .attr("class", (d) => { return "dot " + d.username })
+        .attr("cx", (d) => x(d[cat]))
+        .attr("cy", (d) => {
+          let info = d[cat];
+          let margin = -1;
+          if (!numberDict[info]) {
+            numberDict[info] = -1;
+          } else if (numberDict[info]) {
+            numberDict[info] -= 5;
+            margin = numberDict[info];
+          }
+          return yLabels(cat) + margin;
+        })
+        .attr("r", 7)
+        .style("fill", "lightgray")
+        .on("mouseover", (event) => this.handleMouseOver(event.target.classList[1]))
+      // .on("mouseleave", this.handleMouseOver(""))
+      return "";
+    });
+>>>>>>> Refactor to class
+
+    this.highlightUser()
+  }
+
+  render() {
+    return (
+      <div className="App" >
+        <h1>Archetypes</h1>
+        <svg id="area" height={500} width={900}></svg>
+      </div>
+    );
+  }
 }
