@@ -1,8 +1,6 @@
 import React from "react";
-import { getData } from "./scripts/data.js";
 import Archetypes from "./archetypes.js";
 import Details from "./details.js";
-import UserCard from "./usercard";
 import { getData } from "./scripts/data";
 
 class Layout extends React.Component {
@@ -28,10 +26,10 @@ class Layout extends React.Component {
           />
         </div>
         <div className=" bg-gray-100 rounded-md">
-          <UserCard
+          <Details
             data={this.state.users}
-            username={this.state.selectedUser}
-          />
+            username={[this.state.selectedUser]}
+          ></Details>
         </div>
         <div className=" bg-gray-100 rounded-md">Soon</div>
         <div className=" bg-gray-100 rounded-md">Soon</div>
