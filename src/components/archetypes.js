@@ -38,7 +38,7 @@ export default function Archetypes(props) {
       var highlight = function (event) {
         let selected_user = event.target.classList[1];
 
-        props.onHighlight(selected_user);
+        props.onUserSelected(selected_user);
 
         d3.selectAll(".dot")
           .transition()
