@@ -52,7 +52,10 @@ export default class ArchetypesGraph extends Component {
   }
 
   handleClick(userID) {
-    if (!this.props.selectedUsers.find((u) => u.id === userID)) {
+    if (this.props.selectedUsers.find((u) => u.id === userID)) {
+      var newUsers = this.props.selectedUsers.filter((u) => u.id !== userID)
+      this.props.onUsersSelected(newUsers.map((u) => u.id))
+    } else {
       if (this.props.selectedUsers.length >= 5) {
         const userIDs = this.props.selectedUsers.slice(1).map((u) => u.id).concat(userID)
         this.props.onUsersSelected(userIDs)
