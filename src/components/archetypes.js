@@ -96,7 +96,8 @@ export default function Archetypes(props) {
         return "";
       });
     });
-  }, [props]);
+  //eslint-disable-next-line
+  }, []);
 
   return (
     <div className="App">
