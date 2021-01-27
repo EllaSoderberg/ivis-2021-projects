@@ -41,7 +41,7 @@ export default function Archetypes(props) {
         // 
         console.log("Lifitng up the state (change)");
         console.log("1: " + selected_user);
-        props.onHighlight(selected_user);
+        props.onUserSelected(selected_user);
 
         d3.selectAll(".dot")
           .transition()
