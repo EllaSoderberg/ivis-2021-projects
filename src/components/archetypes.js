@@ -7,7 +7,7 @@ import { axisLeft } from "d3";
 
 //https://www.d3-graph-gallery.com/graph/scatter_grouped_highlight.html
 
-export default function Example() {
+export default function Archetypes(props) {
   useEffect(() => {
     const margin = { top: 10, right: 40, bottom: 30, left: 80 },
       width = 800 - margin.left - margin.right,
@@ -24,7 +24,7 @@ export default function Example() {
     const yLabels = d3
       .scalePoint()
       .domain(["MathWiz", "Programmer", "Artist", "UX", "Communicator"])
-      .range([margin.top+margin.bottom, height-margin.bottom]);
+      .range([margin.top + margin.bottom, height - margin.bottom]);
 
     svg.append("g").call(axisLeft(yLabels));
 
@@ -37,6 +37,11 @@ export default function Example() {
     getData().then((data) => {
       var highlight = function (event) {
         let selected_user = event.target.classList[1];
+
+        // 
+        console.log("Lifitng up the state (change)");
+        console.log("1: " + selected_user);
+        props.onHighlight(selected_user);
 
         d3.selectAll(".dot")
           .transition()
@@ -92,7 +97,7 @@ export default function Example() {
           .style("fill", "red")
           .on("mouseover", highlight)
           .on("mouseleave", doNotHighlight);
-          return "";
+        return "";
       });
       /*const circle = d3
       .selectAll(".dot")
@@ -136,6 +141,7 @@ export default function Example() {
 
   return (
     <div className="App">
+      <h1>Archetypes</h1>
       <svg id="area" height={500} width={900}></svg>
     </div>
   );
