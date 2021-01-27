@@ -38,9 +38,6 @@ export default function Archetypes(props) {
       var highlight = function (event) {
         let selected_user = event.target.classList[1];
 
-        // 
-        console.log("Lifitng up the state (change)");
-        console.log("1: " + selected_user);
         props.onHighlight(selected_user);
 
         d3.selectAll(".dot")
@@ -78,7 +75,6 @@ export default function Archetypes(props) {
         dots
           .append("circle")
           .attr("class", function (d) {
-            console.log(d.username, d[cat]);
             return "dot " + d.username;
           })
           .attr("cx", (d) => x(d[cat]))
@@ -99,43 +95,6 @@ export default function Archetypes(props) {
           .on("mouseleave", doNotHighlight);
         return "";
       });
-      /*const circle = d3
-      .selectAll(".dot")
-      .append("svg")
-      .attr("width", 10)
-      .attr("height", 10);
-    circle
-      .append("circle")
-      .attr("cx", 5)
-      .attr("cy", 5)
-      .attr("r", 10)
-      .attr("fill", "lightgray");
-    circle
-      .append("circle")
-      .attr("cx", 15)
-      .attr("cy", 20)
-      .attr("r", 3)
-      .attr("fill", "black");
-    circle
-      .append("circle")
-      .attr("cx", 35)
-      .attr("cy", 20)
-      .attr("r", 3)
-      .attr("fill", "black");
-    circle
-      .append("ellipse")
-      .attr("cx", 25)
-      .attr("cy", 26)
-      .attr("rx", 6)
-      .attr("ry", 3)
-      .attr("fill", "black");
-    circle
-      .append("ellipse")
-      .attr("cx", 25)
-      .attr("cy", 24)
-      .attr("rx", 6)
-      .attr("ry", 3)
-      .attr("fill", "yellow");*/
     });
   }, []);
 
