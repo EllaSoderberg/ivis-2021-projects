@@ -8,35 +8,32 @@ class Layout extends React.Component {
     super(props);
     this.state = {
       users: {},
-      selectedUser: null,
+      selectedUsers: [],
     };
   }
 
   componentDidMount() {
     getData().then((data) => this.setState({ users: data }));
   }
-  handleUserSelected(userID) {
-    console.log("handleUserSelected")
-    const user = this.state.users.find((u) => u.id === userID)
-    console.log(user)
-    this.setState({ selectedUser: user })
+  handleUsersSelected(userIDs) {
+    const users = userIDs.map((userID => this.state.users.find((u) => u.id === userID)))
+    this.setState({ selectedUsers: users })
   }
 
   render() {
     return (
-      <div className="grid grid-cols-2 gap-4">
-        <div className=" bg-gray-100 rounded-md">
+      <div className="flex-col justify-center">
+        <div className="App mb-5 text-lg">Group Maker 6000</div>
+        <div className=" bg-gray-100 rounded-md mb-5">
           <Archetypes
             users={this.state.users}
-            highlightedUser={this.state.selectedUser}
-            onUserSelected={(userID) => this.handleUserSelected(userID)}
+            selectedUsers={this.state.selectedUsers}
+            onUsersSelected={(userIDs) => this.handleUsersSelected(userIDs)}
           />
         </div>
         <div className=" bg-gray-100 rounded-md">
-          <Details users={[this.state.selectedUser]} />
+          <Details users={this.state.selectedUsers} />
         </div>
-        <div className=" bg-gray-100 rounded-md">Soon</div>
-        <div className=" bg-gray-100 rounded-md">Soon</div>
       </div>
     );
   }

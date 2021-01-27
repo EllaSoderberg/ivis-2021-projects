@@ -6,7 +6,7 @@ export default class UserCard extends React.Component {
       return <div></div>
     }
 
-    let valueSkills = Object.values(this.props.user).slice(10, 21);
+    let valueSkills = Object.values(this.props.user).slice(11, 22);
     let nameSkills = [
       "A great Artist",
       "A master Collaborator",
@@ -24,7 +24,7 @@ export default class UserCard extends React.Component {
     let indexMax = valueSkills.indexOf(max);
 
     return (
-      <div class="w-full border-t-2 border-b-2 border-black border-solid px-6 py-2">
+      <div className="border-2 border-gray-200 rounded-md border-solid p-3">
         <p>
           <b>Nickname:</b> {this.props.user.username}
         </p>
