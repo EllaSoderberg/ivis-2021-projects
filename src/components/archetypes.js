@@ -5,11 +5,19 @@ import { axisLeft } from "d3";
 // Example taken from https://blog.logrocket.com/using-d3-js-v6-with-react/
 
 //https://www.d3-graph-gallery.com/graph/scatter_grouped_highlight.html
-
+const USER_ID_PREFIX = "userid-"
 export default class ArchetypesGraph extends Component {
   constructor(props) {
     super(props);
     this.creatGraph = this.creatGraph.bind(this)
+    this.highlightColors = [
+      { c: "red", used: false },
+      { c: "blue", used: false },
+      { c: "green", used: false },
+      { c: "yellow", used: false },
+      { c: "black", used: false }
+    ]
+
   }
 
   componentDidMount() {
@@ -21,23 +29,25 @@ export default class ArchetypesGraph extends Component {
 
   highlightUser() {
     if (this.props.highlightedUser) {
-      d3.selectAll("." + this.props.highlightedUser)
+      d3.selectAll("." + USER_ID_PREFIX + this.props.highlightedUser.id)
         .transition()
         .duration(200)
         .style("fill", "red")
-        .attr("z", 10)
         .attr("r", 7);
     }
   }
 
   handleMouseOver(user) {
-    console.log("\nhandleMouseOver")
-    console.log(user);
-    console.log(this.props.highlightedUser)
-    if (this.props.highlightedUser !== user) {
-      console.log("nUserSelected")
+    if (!this.props.highlightedUser || this.props.highlightedUser.id !== user) {
       this.props.onUserSelected(user)
     }
+  }
+
+  extractIDfromD3class(d3Class) {
+    // D3 uses the ID to create the dots.
+    // It has class in the form: "userid-#####"
+    // So we extract and return only the numeric value
+    return d3Class.slice(7)
   }
 
   creatGraph() {
@@ -79,7 +89,7 @@ export default class ArchetypesGraph extends Component {
 
       dots
         .append("circle")
-        .attr("class", (d) => { return "dot " + d.username })
+        .attr("class", (d) => { return "dot " + USER_ID_PREFIX + d.id })
         .attr("cx", (d) => x(d[cat]))
         .attr("cy", (d) => {
           let info = d[cat];
@@ -94,8 +104,10 @@ export default class ArchetypesGraph extends Component {
         })
         .attr("r", 7)
         .style("fill", "lightgray")
-        .on("mouseover", (event) => this.handleMouseOver(event.target.classList[1]))
-      // .on("mouseleave", this.handleMouseOver(""))
+        .on("mouseover", (event) => {
+          let userID = this.extractIDfromD3class(event.target.classList[1]);
+          this.handleMouseOver(userID);
+        })
       return "";
     });
 

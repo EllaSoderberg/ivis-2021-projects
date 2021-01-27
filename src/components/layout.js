@@ -15,6 +15,12 @@ class Layout extends React.Component {
   componentDidMount() {
     getData().then((data) => this.setState({ users: data }));
   }
+  handleUserSelected(userID) {
+    console.log("handleUserSelected")
+    const user = this.state.users.find((u) => u.id === userID)
+    console.log(user)
+    this.setState({ selectedUser: user })
+  }
 
   render() {
     return (
@@ -22,14 +28,12 @@ class Layout extends React.Component {
         <div className=" bg-gray-100 rounded-md">
           <Archetypes
             users={this.state.users}
-            onUserSelected={(u) => this.setState({ selectedUser: u })}
+            highlightedUser={this.state.selectedUser}
+            onUserSelected={(userID) => this.handleUserSelected(userID)}
           />
         </div>
         <div className=" bg-gray-100 rounded-md">
-          <Details
-            data={this.state.users}
-            username={[this.state.selectedUser]}
-          ></Details>
+          <Details users={[this.state.selectedUser]} />
         </div>
         <div className=" bg-gray-100 rounded-md">Soon</div>
         <div className=" bg-gray-100 rounded-md">Soon</div>
