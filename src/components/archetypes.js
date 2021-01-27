@@ -96,7 +96,7 @@ export default function Archetypes(props) {
         return "";
       });
     });
-  }, []);
+  }, [props]);
 
   return (
     <div className="App">

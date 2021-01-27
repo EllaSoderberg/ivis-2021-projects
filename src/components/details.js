@@ -13,6 +13,7 @@ export default function Details(props) {
           userData.push(props.data[i]);
         }
       }
+      return
     });
   }
   if (userData) {
