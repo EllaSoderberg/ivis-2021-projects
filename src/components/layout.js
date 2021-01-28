@@ -9,17 +9,23 @@ class Layout extends React.Component {
     super(props);
     this.state = {
       users: [],
+      filteredUsers: [],
       selectedUsers: [],
       filterValues: {
-        min: 0,
+        min: 4,
         max: 10
       }
     };
   }
 
   componentDidMount() {
-    getData().then((data) => this.setState({ users: data }));
+    getData().then((data) => this.setState({ users: data, filteredUsers: this.filterUsers(data, this.state.filterValues.min, this.state.filterValues.max) }));
   }
+
+  // componentDidUpdate() {
+  //   console.log(this.state.filteredUsers)
+  // }
+
   handleUsersSelected(userIDs) {
     const users = userIDs.map((userID => this.state.users.find((u) => u.id === userID)))
     this.setState({ selectedUsers: users })
@@ -37,10 +43,7 @@ class Layout extends React.Component {
     return this.state.selectedUsers.find((u) => u.id === user.id)
   }
 
-  filterUsers(users) {
-    var min = this.state.filterValues.min;
-    var max = this.state.filterValues.max;
-
+  filterUsers(users, min, max) {
     return users.filter((user) => {
       return this.userIsSelected(user) || this.checkInRange(user, min, max)
     })
@@ -49,6 +52,7 @@ class Layout extends React.Component {
   handleNewRange(which, value) {
     if (which === "min") {
       this.setState({
+        filteredUsers: this.filterUsers(this.state.users, value, this.state.filterValues.max),
         filterValues: {
           min: value,
           max: this.state.filterValues.max
@@ -56,6 +60,7 @@ class Layout extends React.Component {
       })
     } else if (which === "max") {
       this.setState({
+        filteredUsers: this.filterUsers(this.state.users, this.state.filterValues.min, value),
         filterValues: {
           min: this.state.filterValues.min,
           max: value
@@ -70,7 +75,7 @@ class Layout extends React.Component {
         <div className="App mb-5 text-lg">Group Maker 6000</div>
         <div className="flex flex-col bg-gray-100 rounded-md mb-5">
           <Archetypes
-            users={this.filterUsers(this.state.users)}
+            users={this.state.filteredUsers}
             selectedUsers={this.state.selectedUsers}
             onUsersSelected={(userIDs) => this.handleUsersSelected(userIDs)}
           />
@@ -88,8 +93,10 @@ class Layout extends React.Component {
         <div className=" bg-gray-100 rounded-md">
           <Details users={this.state.selectedUsers} />
         </div>
-        Credits for the input buttons: CarreonPhedz via
-        <a className="text-blue" href="https://tailwindcomponents.com/component/input-number-custom-style">Tailwind</a>
+        <div className="mt-20">
+          Credits for the input buttons: CarreonPhedz via
+          <a className="text-blue" href="https://tailwindcomponents.com/component/input-number-custom-style"> Tailwind</a>
+        </div>
       </div>
     );
   }
