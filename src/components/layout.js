@@ -87,7 +87,7 @@ class Layout extends React.Component {
         <div className="flex flex-col xl:flex-row">
           <div className="m-6">
             <Archetypes
-              users={this.filterUsers(this.state.users)}
+              users={this.state.filteredUsers}
               selectedUsers={this.state.selectedUsers}
               onUsersSelected={(userIDs) => this.handleUsersSelected(userIDs)}
             />
@@ -114,12 +114,12 @@ class Layout extends React.Component {
             <Details users={this.state.selectedUsers} />
           </div>
         </div>
-        <p className="mt-20">Credits for the input buttons: 
+        <p className="mt-20">Credits for the input buttons:
         <a
-          className="font-bold"
-          href="https://tailwindcomponents.com/component/input-number-custom-style"
-        >
-          {" "}CarreonPhedz via Tailwind
+            className="font-bold"
+            href="https://tailwindcomponents.com/component/input-number-custom-style"
+          >
+            {" "}CarreonPhedz via Tailwind
         </a></p>
       </div>
     );
