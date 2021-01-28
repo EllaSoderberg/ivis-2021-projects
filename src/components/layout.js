@@ -9,6 +9,7 @@ class Layout extends React.Component {
     super(props);
     this.state = {
       users: [],
+      filteredUsers: [],
       selectedUsers: [],
       filterValues: {
         min: 0,
@@ -18,8 +19,13 @@ class Layout extends React.Component {
   }
 
   componentDidMount() {
-    getData().then((data) => this.setState({ users: data }));
+    getData().then((data) => this.setState({ users: data, filteredUsers: this.filterUsers(data, this.state.filterValues.min, this.state.filterValues.max) }));
   }
+
+  // componentDidUpdate() {
+  //   console.log(this.state.filteredUsers)
+  // }
+
   handleUsersSelected(userIDs) {
     const users = userIDs.map((userID) =>
       this.state.users.find((u) => u.id === userID)
@@ -46,10 +52,7 @@ class Layout extends React.Component {
     return this.state.selectedUsers.find((u) => u.id === user.id);
   }
 
-  filterUsers(users) {
-    var min = this.state.filterValues.min;
-    var max = this.state.filterValues.max;
-
+  filterUsers(users, min, max) {
     return users.filter((user) => {
       return this.userIsSelected(user) || this.checkInRange(user, min, max);
     });
@@ -58,6 +61,7 @@ class Layout extends React.Component {
   handleNewRange(which, value) {
     if (which === "min") {
       this.setState({
+        filteredUsers: this.filterUsers(this.state.users, value, this.state.filterValues.max),
         filterValues: {
           min: value,
           max: this.state.filterValues.max,
@@ -65,6 +69,7 @@ class Layout extends React.Component {
       });
     } else if (which === "max") {
       this.setState({
+        filteredUsers: this.filterUsers(this.state.users, this.state.filterValues.min, value),
         filterValues: {
           min: this.state.filterValues.min,
           max: value,
@@ -109,7 +114,6 @@ class Layout extends React.Component {
             <Details users={this.state.selectedUsers} />
           </div>
         </div>
-
         <p className="mt-20">Credits for the input buttons: 
         <a
           className="font-bold"

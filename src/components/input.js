@@ -4,15 +4,11 @@ import React, { Component } from "react";
 
 export default class Input extends Component {
     handleClick(diff) {
-        console.log("handleClick")
-        console.log("Curr " + this.props.value)
         var curr = this.props.value
         if ((diff === -1 && curr === 0) || (diff === 1 && curr === 10)) {
-            console.log("return")
             return;
         } else {
             const new_value = curr + diff
-            console.log(diff)
             this.props.onClick(new_value);
         }
     }
