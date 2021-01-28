@@ -4,7 +4,7 @@ import { Layout } from "./components/layout.js";
 function App() {
 
   return (
-    <div className="container p-16 flex bg-gray-200">
+    <div className="p-16">
       <Layout />
     </div>
   );
