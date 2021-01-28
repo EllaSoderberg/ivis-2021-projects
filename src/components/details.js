@@ -1,23 +1,14 @@
 import React from "react";
 import UserCard from "./usercard";
 
-export default function Details(props) {
-  let userData = [];
-
-  if (props.username) {
-    props.username.map((name) => {
-      for (let i = 0; i < props.data.length; i++) {
-        if (props.data[i].username === name) {
-          userData.push(props.data[i]);
-        } else if (props.data[i].username.includes(name)) {
-          userData.push(props.data[i]);
-        }
-      }
-      return null;
-    });
+export default class Details extends React.Component {
+  render() {
+    const cards = this.props.users.map((user) => <UserCard user={user} />)
+    return (
+      <div className="App" >
+        <h1>Details</h1>
+        {cards}
+      </div>
+    );
   }
-  if (userData) {
-    return userData.map((info) => <UserCard data={info} />);
-  }
-  return null;
 }
