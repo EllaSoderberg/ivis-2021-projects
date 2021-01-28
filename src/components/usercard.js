@@ -3,7 +3,7 @@ import React from "react";
 export default class UserCard extends React.Component {
   render() {
     if (!this.props.user) {
-      return <div></div>
+      return <div></div>;
     }
 
     let valueSkills = Object.values(this.props.user).slice(11, 22);
@@ -24,7 +24,7 @@ export default class UserCard extends React.Component {
     let indexMax = valueSkills.indexOf(max);
 
     return (
-      <div className="border-2 border-gray-200 rounded-md border-solid p-3">
+      <div className="border-b-1 border-t-2 border-solid border-black p-3">
         <p>
           <b>Nickname:</b> {this.props.user.username}
         </p>
@@ -47,5 +47,4 @@ export default class UserCard extends React.Component {
       </div>
     );
   }
-
 }
