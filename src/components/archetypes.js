@@ -89,6 +89,8 @@ export default class ArchetypesGraph extends Component {
   }
 
   creatGraph() {
+    d3.selectAll("svg > *").remove();
+
     const margin = { top: 10, right: 40, bottom: 30, left: 100 },
       width = 800 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
