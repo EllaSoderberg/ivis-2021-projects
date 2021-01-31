@@ -107,6 +107,7 @@ class Layout extends React.Component {
                   onClick={(value) => this.handleNewRange("max", value)}
                 />
               </div>
+              <p class=" ml-10 text-red-700">(Click on the dots to select group members)</p>
             </div>
           </div>
 

@@ -109,6 +109,11 @@ export default class ArchetypesGraph extends Component {
       .range([margin.top + margin.bottom, height - margin.bottom]);
 
     svg.append("g").style("font-size", "12px").call(axisLeft(yLabels));
+    svg.append("text")
+      .attr("transform",
+        "translate(" + (width / 2) + " ," +
+        (height + margin.top + 20) + ")")
+      .text("Score");
 
     const x = d3.scaleLinear().domain([0, 10]).range([0, width]);
     svg
